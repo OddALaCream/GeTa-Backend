@@ -21,7 +21,7 @@ import { CommentsModule } from './comments/comments.module';
         password: configService.get<string>('DB_PASSWORD', 'postgres'),
         database: configService.get<string>('DB_NAME', 'geta_cato'),
         autoLoadEntities: true,
-        synchronize: configService.get<string>('NODE_ENV') !== 'production',
+        synchronize: configService.get<string>('DB_SYNC', 'false') === 'true',
       }),
       inject: [ConfigService],
     }),
