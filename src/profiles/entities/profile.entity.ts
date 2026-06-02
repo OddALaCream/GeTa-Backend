@@ -38,11 +38,14 @@ export class Profile {
   @Column()
   careerId: string;
 
-  @OneToOne(() => User, { onDelete: 'CASCADE' })
+  @OneToOne(() => User, (user) => user.profile, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @ManyToOne(() => Career, { eager: false, onDelete: 'RESTRICT' })
+  @ManyToOne(() => Career, (career) => career.profiles, {
+    eager: false,
+    onDelete: 'RESTRICT',
+  })
   @JoinColumn({ name: 'careerId' })
   career: Career;
 

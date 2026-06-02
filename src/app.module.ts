@@ -7,6 +7,10 @@ import { ProfilesModule } from './profiles/profiles.module';
 import { CareersModule } from './careers/careers.module';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { MessagesModule } from './messages/messages.module';
+import { FollowsModule } from './follows/follows.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -42,6 +46,10 @@ import { CommentsModule } from './comments/comments.module';
     CareersModule,
     PostsModule,
     CommentsModule,
+    NotificationsModule,
+    MessagesModule,
+    FollowsModule,
+    SearchModule,
   ],
 })
 export class AppModule {}

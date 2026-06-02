@@ -22,6 +22,12 @@ import { RequestUser } from '../auth/interfaces/request-user.interface';
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  @Get('saved/me')
+  @UseGuards(JwtAuthGuard)
+  findSaved(@CurrentUser() user: RequestUser) {
+    return this.postsService.findSavedPosts(user.userId);
+  }
+
   @Post()
   @UseGuards(JwtAuthGuard)
   create(
@@ -33,14 +39,53 @@ export class PostsController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  findAll(@Query() query: QueryPostsDto) {
-    return this.postsService.findAll(query);
+  findAll(@Query() query: QueryPostsDto, @CurrentUser() user: RequestUser) {
+    return this.postsService.findAll(query, user.userId);
+  }
+
+  @Post(':id/like')
+  @UseGuards(JwtAuthGuard)
+  like(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: RequestUser,
+  ) {
+    return this.postsService.like(id, user.userId);
+  }
+
+  @Delete(':id/like')
+  @UseGuards(JwtAuthGuard)
+  unlike(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: RequestUser,
+  ) {
+    return this.postsService.unlike(id, user.userId);
+  }
+
+  @Post(':id/save')
+  @UseGuards(JwtAuthGuard)
+  save(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: RequestUser,
+  ) {
+    return this.postsService.save(id, user.userId);
+  }
+
+  @Delete(':id/save')
+  @UseGuards(JwtAuthGuard)
+  unsave(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: RequestUser,
+  ) {
+    return this.postsService.unsave(id, user.userId);
   }
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.postsService.findOne(id);
+  findOne(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: RequestUser,
+  ) {
+    return this.postsService.findOne(id, user.userId);
   }
 
   @Patch(':id')

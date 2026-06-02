@@ -29,10 +29,19 @@ cp .env.example .env
 # 3. Create the database in Postgres
 createdb geta_cato
 
-# 4. Start in development (auto-sync schema)
+# 4. Create base tables
+# Run database/schema.sql in Postgres or Supabase
+
+# 5. Create social extension tables
+# Run database/social_features.sql in Postgres or Supabase
+
+# 6. Optional: load demo data once
+npm run seed
+
+# 7. Start in development
 npm run start:dev
 
-# 5. API is available at
+# 8. API is available at
 http://localhost:3000/api
 ```
 
@@ -73,6 +82,10 @@ http://localhost:3000/api
 | profiles | `/api/profiles` | Public (by userId) / JWT (me, update) |
 | posts | `/api/posts` | JWT |
 | comments | `/api/comments` | JWT |
+| notifications | `/api/notifications` | JWT |
+| messages | `/api/messages` | JWT |
+| follows | `/api/follows` | JWT |
+| search | `/api/search` | JWT |
 
 ---
 
@@ -82,6 +95,7 @@ http://localhost:3000/api
 npm run start:dev    # development with hot-reload
 npm run build        # compile TypeScript
 npm run start:prod   # run compiled dist/
+npm run seed         # idempotent demo seed for social data
 npm run lint         # ESLint
 ```
 

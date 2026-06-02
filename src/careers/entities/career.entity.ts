@@ -6,6 +6,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Profile } from '../../profiles/entities/profile.entity';
+import { Post } from '../../posts/entities/post.entity';
 
 @Entity('careers')
 export class Career {
@@ -17,6 +19,12 @@ export class Career {
 
   @Column({ unique: true, nullable: true })
   code: string;
+
+  @OneToMany(() => Profile, (profile) => profile.career)
+  profiles: Profile[];
+
+  @OneToMany(() => Post, (post) => post.career)
+  posts: Post[];
 
   @CreateDateColumn()
   createdAt: Date;
