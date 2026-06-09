@@ -27,6 +27,9 @@ async function bootstrap() {
   }
 
   expressApp.use('/uploads', express.static(uploadsDir, { fallthrough: true }));
+  expressApp.get(['/uploads', '/uploads/'], (_req, res) => {
+    return res.type('image/svg+xml').sendFile(placeholderPath);
+  });
   expressApp.get('/uploads/:filename', (req, res) => {
     const extension = extname(req.params.filename || '').toLowerCase();
 
@@ -52,8 +55,23 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
+  const allowedOrigins = new Set([
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    ...(process.env.FRONTEND_URL || '')
+      .split(',')
+      .map((origin) => origin.trim())
+      .filter(Boolean),
+  ]);
+
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.has(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(null, false);
+    },
     credentials: true,
   });
 

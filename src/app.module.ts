@@ -12,6 +12,7 @@ import { MessagesModule } from './messages/messages.module';
 import { FollowsModule } from './follows/follows.module';
 import { SearchModule } from './search/search.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     FollowsModule,
     SearchModule,
     DashboardModule,
+    UploadsModule,
   ],
 })
 export class AppModule {}
