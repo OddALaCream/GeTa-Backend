@@ -9,6 +9,8 @@ import { PostLike } from './entities/post-like.entity';
 import { SavedPost } from './entities/saved-post.entity';
 import { User } from '../users/entities/user.entity';
 import { NotificationsModule } from '../notifications/notifications.module';
+import { PostFeedAssemblerService } from './services/post-feed-assembler.service';
+import { PostLookupService } from './services/post-lookup.service';
 
 @Module({
   imports: [
@@ -23,7 +25,7 @@ import { NotificationsModule } from '../notifications/notifications.module';
     NotificationsModule,
   ],
   controllers: [PostsController],
-  providers: [PostsService],
-  exports: [PostsService],
+  providers: [PostsService, PostFeedAssemblerService, PostLookupService],
+  exports: [PostsService, PostFeedAssemblerService, PostLookupService],
 })
 export class PostsModule {}

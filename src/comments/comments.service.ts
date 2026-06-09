@@ -5,35 +5,28 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Comment } from './entities/comment.entity';
-import { Post } from '../posts/entities/post.entity';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
+import { Comment } from './entities/comment.entity';
 import { User } from '../users/entities/user.entity';
 import { NotificationsService } from '../notifications/notifications.service';
 import { NotificationType } from '../notifications/entities/notification.entity';
 import { buildUserSummary } from '../common/serializers/user-summary';
+import { PostLookupService } from '../posts/services/post-lookup.service';
 
 @Injectable()
 export class CommentsService {
   constructor(
     @InjectRepository(Comment)
     private readonly commentsRepo: Repository<Comment>,
-    @InjectRepository(Post)
-    private readonly postsRepo: Repository<Post>,
     @InjectRepository(User)
     private readonly usersRepo: Repository<User>,
+    private readonly postLookupService: PostLookupService,
     private readonly notificationsService: NotificationsService,
   ) {}
 
   async create(authorId: string, dto: CreateCommentDto) {
-    const post = await this.postsRepo.findOne({
-      where: { id: dto.postId, isDeleted: false },
-      relations: ['author', 'author.profile', 'author.profile.career'],
-    });
-    if (!post) {
-      throw new NotFoundException(`Post with id "${dto.postId}" not found`);
-    }
+    const post = await this.postLookupService.findPostOrFail(dto.postId);
 
     const author = await this.usersRepo.findOne({
       where: { id: authorId },
@@ -51,7 +44,7 @@ export class CommentsService {
       recipientId: post.authorId,
       actorId: authorId,
       type: NotificationType.COMMENT,
-      message: `${author.profile?.fullName || author.email} comentó tu publicación`,
+      message: `${author.profile?.fullName || author.email} comento tu publicacion`,
       link: `/home?view=feed&postId=${post.id}`,
     });
 
@@ -87,9 +80,11 @@ export class CommentsService {
       where: { id, isDeleted: false },
       relations: ['author', 'author.profile', 'author.profile.career'],
     });
+
     if (!comment) {
       throw new NotFoundException(`Comment with id "${id}" not found`);
     }
+
     if (comment.authorId !== authorId) {
       throw new ForbiddenException('You can only edit your own comments');
     }
@@ -111,15 +106,18 @@ export class CommentsService {
     const comment = await this.commentsRepo.findOne({
       where: { id, isDeleted: false },
     });
+
     if (!comment) {
       throw new NotFoundException(`Comment with id "${id}" not found`);
     }
+
     if (comment.authorId !== authorId) {
       throw new ForbiddenException('You can only delete your own comments');
     }
 
     comment.isDeleted = true;
     await this.commentsRepo.save(comment);
+
     return { message: 'Comment deleted successfully' };
   }
 }

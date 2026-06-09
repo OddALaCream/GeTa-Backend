@@ -5,22 +5,13 @@ import { SearchService } from './search.service';
 import { Profile } from '../profiles/entities/profile.entity';
 import { Career } from '../careers/entities/career.entity';
 import { Post } from '../posts/entities/post.entity';
-import { Comment } from '../comments/entities/comment.entity';
-import { PostLike } from '../posts/entities/post-like.entity';
-import { SavedPost } from '../posts/entities/saved-post.entity';
 import { Follow } from '../follows/entities/follow.entity';
+import { PostsModule } from '../posts/posts.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      Profile,
-      Career,
-      Post,
-      Comment,
-      PostLike,
-      SavedPost,
-      Follow,
-    ]),
+    TypeOrmModule.forFeature([Profile, Career, Post, Follow]),
+    PostsModule,
   ],
   controllers: [SearchController],
   providers: [SearchService],

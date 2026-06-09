@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Imagen no disponible</title>
+  <desc id="desc">Placeholder para archivos faltantes en la carpeta uploads.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1220" />
+      <stop offset="100%" stop-color="#18253b" />
+    </linearGradient>
+    <linearGradient id="frame" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffd100" />
+      <stop offset="100%" stop-color="#fff0a0" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" rx="48" fill="url(#bg)" />
+  <rect x="70" y="70" width="1060" height="660" rx="34" fill="none" stroke="url(#frame)" stroke-width="10" opacity="0.9" />
+  <circle cx="290" cy="245" r="70" fill="#ffd100" opacity="0.9" />
+  <path d="M190 600 410 390l150 150 120-95 210 155H190Z" fill="#2a3e61" />
+  <path d="M410 600 620 405l115 108 79-64 196 151H410Z" fill="#4e6b94" opacity="0.95" />
+  <text x="600" y="330" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="64" font-weight="700">
+    Imagen no disponible
+  </text>
+  <text x="600" y="400" text-anchor="middle" fill="#c6d0e1" font-family="Arial, sans-serif" font-size="28">
+    El archivo original ya no existe en uploads
+  </text>
+</svg>
