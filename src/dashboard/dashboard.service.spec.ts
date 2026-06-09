@@ -35,7 +35,7 @@ describe('DashboardService', () => {
     );
   });
 
-  it('builds an overview with metrics, checklist and a focus message', async () => {
+  it('builds an overview with metrics and a focus message', async () => {
     profilesRepo.findOne.mockResolvedValue({
       userId: 'user-1',
       fullName: 'Ana Perez',
@@ -65,11 +65,6 @@ describe('DashboardService', () => {
     expect(result.metrics.pendingItems).toBe(4);
     expect(result.highlight.profileCompletion).toBe(67);
     expect(result.highlight.focusMessage).toContain('conversaciones pendientes');
-    expect(result.checklist).toEqual([
-      expect.objectContaining({ id: 'bio', completed: true }),
-      expect.objectContaining({ id: 'avatar', completed: false }),
-      expect.objectContaining({ id: 'first-post', completed: true }),
-    ]);
   });
 
   it('prioritizes publishing guidance when there is no activity yet', async () => {

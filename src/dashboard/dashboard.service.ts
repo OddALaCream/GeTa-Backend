@@ -8,13 +8,6 @@ import { Post } from '../posts/entities/post.entity';
 import { SavedPost } from '../posts/entities/saved-post.entity';
 import { Profile } from '../profiles/entities/profile.entity';
 
-type ChecklistItem = {
-  id: string;
-  title: string;
-  description: string;
-  completed: boolean;
-};
-
 @Injectable()
 export class DashboardService {
   constructor(
@@ -74,32 +67,13 @@ export class DashboardService {
       }),
     ]);
 
-    const checklist: ChecklistItem[] = [
-      {
-        id: 'bio',
-        title: 'Completa tu bio',
-        description: 'Ayuda a que otros estudiantes entiendan tus intereses.',
-        completed: Boolean(profile.bio?.trim()),
-      },
-      {
-        id: 'avatar',
-        title: 'Agrega un avatar',
-        description: 'Tu perfil se reconoce mucho mas rapido con una imagen.',
-        completed: Boolean(profile.avatarUrl?.trim()),
-      },
-      {
-        id: 'first-post',
-        title: 'Publica en tu comunidad',
-        description: 'Comparte una idea, evento o recurso de tu carrera.',
-        completed: myPosts > 0,
-      },
-    ];
-
-    const completedChecklist = checklist.filter((item) => item.completed).length;
+    const completedChecklist = [
+      Boolean(profile.bio?.trim()),
+      Boolean(profile.avatarUrl?.trim()),
+      myPosts > 0,
+    ].filter(Boolean).length;
     const pendingItems = unreadNotifications + unreadMessages;
-    const profileCompletion = Math.round(
-      (completedChecklist / checklist.length) * 100,
-    );
+    const profileCompletion = Math.round((completedChecklist / 3) * 100);
 
     return {
       profile: {
@@ -124,7 +98,6 @@ export class DashboardService {
         following,
         pendingItems,
       },
-      checklist,
       highlight: {
         profileCompletion,
         engagementScore: myPosts + followers + following,
