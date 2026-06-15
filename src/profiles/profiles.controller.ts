@@ -16,6 +16,7 @@ import {
   authUserExample,
   exampleIds,
   profileSummaryExample,
+  swaggerReferenceNotes,
 } from '../common/swagger/swagger.examples';
 
 @Controller('profiles')
@@ -52,7 +53,7 @@ export class ProfilesController {
   })
   @ApiParam({
     name: 'userId',
-    description: 'ID del usuario propietario del perfil.',
+    description: `ID del usuario propietario del perfil. ${swaggerReferenceNotes.users}`,
     example: exampleIds.userId,
   })
   @ApiOkResponse({

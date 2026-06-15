@@ -1,3 +1,4 @@
+import { swaggerReferenceNotes } from '../../common/swagger/swagger.examples';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsInt, IsOptional, IsUUID, Max, Min } from 'class-validator';
@@ -29,16 +30,16 @@ export class QueryPostsDto {
   limit?: number = 20;
 
   @ApiPropertyOptional({
-    example: '9bb0f37e-1e30-4df9-bd11-8cf5fe8ef2ab',
-    description: 'Filtra publicaciones por carrera.',
+    example: '2e75860d-3bc6-4392-8ce8-03a961ccfa09',
+    description: `Filtra publicaciones por carrera. ${swaggerReferenceNotes.careers}`,
   })
   @IsOptional()
   @IsUUID()
   careerId?: string;
 
   @ApiPropertyOptional({
-    example: '7a9ad4a2-c0ba-445f-a57f-7925e4f0d52f',
-    description: 'Filtra publicaciones por autor.',
+    example: '45af29fa-53c6-4344-8cc6-9d91364896a9',
+    description: `Filtra publicaciones por autor. ${swaggerReferenceNotes.users}`,
   })
   @IsOptional()
   @IsUUID()

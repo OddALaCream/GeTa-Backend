@@ -23,9 +23,9 @@ import { RequestUser } from '../auth/interfaces/request-user.interface';
 import { SendMessageDto } from './dto/send-message.dto';
 import {
   conversationDetailExample,
-  conversationSummaryExample,
   exampleIds,
   messageExample,
+  swaggerReferenceNotes,
 } from '../common/swagger/swagger.examples';
 
 @Controller('messages')
@@ -42,9 +42,9 @@ export class MessagesController {
       'Flujo real del frontend: HomeTopbar y DashboardOverviewPanel consultan este contador.',
   })
   @ApiOkResponse({
-    description: 'Cantidad de mensajes no leidos.',
+    description: 'Cantidad de mensajes no leidos. Si aun no existen conversaciones en la BD remota, el contador sera 0.',
     schema: {
-      example: { unreadCount: 1 },
+      example: { unreadCount: 0 },
     },
   })
   getSummary(@CurrentUser() user: RequestUser) {
@@ -58,9 +58,9 @@ export class MessagesController {
       'Flujo real del frontend: MessagesPanel -> messageService.getConversations.',
   })
   @ApiOkResponse({
-    description: 'Lista resumida de conversaciones con ultimo mensaje.',
+    description: 'Lista resumida de conversaciones con ultimo mensaje. La BD remota actual puede devolver [] hasta que se cree el primer mensaje.',
     schema: {
-      example: [conversationSummaryExample],
+      example: [],
     },
   })
   getConversations(@CurrentUser() user: RequestUser) {
@@ -75,11 +75,11 @@ export class MessagesController {
   })
   @ApiParam({
     name: 'userId',
-    description: 'ID del otro usuario de la conversacion.',
+    description: `ID del otro usuario de la conversacion. ${swaggerReferenceNotes.users}`,
     example: exampleIds.peerUserId,
   })
   @ApiOkResponse({
-    description: 'Detalle de la conversacion y mensajes en orden cronologico.',
+    description: 'Detalle de la conversacion y mensajes en orden cronologico. Si aun no hubo mensajes entre ambos usuarios, `messages` regresara vacio.',
     schema: {
       example: conversationDetailExample,
     },

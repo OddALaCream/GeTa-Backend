@@ -13,6 +13,7 @@ import { RequestUser } from '../auth/interfaces/request-user.interface';
 import {
   exampleIds,
   notificationExample,
+  swaggerReferenceNotes,
 } from '../common/swagger/swagger.examples';
 
 @Controller('notifications')
@@ -29,9 +30,9 @@ export class NotificationsController {
       'Flujo real del frontend: HomeTopbar y DashboardOverviewPanel consultan este contador.',
   })
   @ApiOkResponse({
-    description: 'Cantidad de notificaciones no leidas.',
+    description: 'Cantidad de notificaciones no leidas. Si tu cuenta aun no recibio actividad, el contador sera 0.',
     schema: {
-      example: { unreadCount: 1 },
+      example: { unreadCount: 0 },
     },
   })
   getSummary(@CurrentUser() user: RequestUser) {
@@ -76,7 +77,7 @@ export class NotificationsController {
   })
   @ApiParam({
     name: 'id',
-    description: 'ID de la notificacion.',
+    description: `ID de la notificacion. ${swaggerReferenceNotes.notifications}`,
     example: exampleIds.notificationId,
   })
   @ApiOkResponse({

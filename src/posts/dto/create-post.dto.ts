@@ -1,10 +1,11 @@
+import { swaggerReferenceNotes } from '../../common/swagger/swagger.examples';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class CreatePostDto {
   @ApiProperty({
-    example: '9bb0f37e-1e30-4df9-bd11-8cf5fe8ef2ab',
-    description: 'ID de carrera asociada al post.',
+    example: '2e75860d-3bc6-4392-8ce8-03a961ccfa09',
+    description: `ID de carrera asociada al post. ${swaggerReferenceNotes.careers}`,
   })
   @IsUUID()
   careerId: string;

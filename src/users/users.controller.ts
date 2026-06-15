@@ -8,7 +8,11 @@ import {
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { authUserExample, exampleIds } from '../common/swagger/swagger.examples';
+import {
+  authUserExample,
+  exampleIds,
+  swaggerReferenceNotes,
+} from '../common/swagger/swagger.examples';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard)
@@ -39,7 +43,7 @@ export class UsersController {
   })
   @ApiParam({
     name: 'id',
-    description: 'ID del usuario.',
+    description: `ID del usuario. ${swaggerReferenceNotes.users}`,
     example: exampleIds.userId,
   })
   @ApiOkResponse({

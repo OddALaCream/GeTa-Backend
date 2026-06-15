@@ -17,6 +17,7 @@ import {
   careerExample,
   exampleIds,
   paginatedPostsExample,
+  swaggerReferenceNotes,
 } from '../common/swagger/swagger.examples';
 
 @Controller('careers')
@@ -49,7 +50,7 @@ export class CareersController {
   })
   @ApiParam({
     name: 'id',
-    description: 'ID de la carrera.',
+    description: `ID de la carrera. ${swaggerReferenceNotes.careers}`,
     example: exampleIds.careerId,
   })
   @ApiOkResponse({
@@ -72,7 +73,7 @@ export class CareersController {
   })
   @ApiParam({
     name: 'id',
-    description: 'ID de la carrera a consultar.',
+    description: `ID de la carrera a consultar. ${swaggerReferenceNotes.careers}`,
     example: exampleIds.careerId,
   })
   @ApiQuery({ name: 'page', required: false, example: 1 })

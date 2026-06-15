@@ -1,3 +1,4 @@
+import { swaggerReferenceNotes } from '../../common/swagger/swagger.examples';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString, IsUUID, MinLength } from 'class-validator';
 
@@ -27,8 +28,8 @@ export class RegisterDto {
   fullName: string;
 
   @ApiProperty({
-    example: '9bb0f37e-1e30-4df9-bd11-8cf5fe8ef2ab',
-    description: 'ID de carrera obtenido desde GET /careers.',
+    example: '2e75860d-3bc6-4392-8ce8-03a961ccfa09',
+    description: swaggerReferenceNotes.careers,
   })
   @IsUUID()
   careerId: string;

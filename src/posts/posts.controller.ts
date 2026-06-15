@@ -31,6 +31,7 @@ import {
   exampleIds,
   paginatedPostsExample,
   postExample,
+  swaggerReferenceNotes,
 } from '../common/swagger/swagger.examples';
 
 @Controller('posts')
@@ -94,11 +95,13 @@ export class PostsController {
     name: 'careerId',
     required: false,
     example: exampleIds.careerId,
+    description: swaggerReferenceNotes.careers,
   })
   @ApiQuery({
     name: 'authorId',
     required: false,
     example: exampleIds.userId,
+    description: swaggerReferenceNotes.users,
   })
   @ApiOkResponse({
     description: 'Posts paginados segun los filtros enviados.',
@@ -120,7 +123,7 @@ export class PostsController {
   })
   @ApiParam({
     name: 'id',
-    description: 'ID del post.',
+    description: `ID del post. ${swaggerReferenceNotes.posts}`,
     example: exampleIds.postId,
   })
   @ApiOkResponse({
@@ -151,7 +154,7 @@ export class PostsController {
   })
   @ApiParam({
     name: 'id',
-    description: 'ID del post.',
+    description: `ID del post. ${swaggerReferenceNotes.posts}`,
     example: exampleIds.postId,
   })
   @ApiOkResponse({
@@ -184,7 +187,7 @@ export class PostsController {
   })
   @ApiParam({
     name: 'id',
-    description: 'ID del post.',
+    description: `ID del post. ${swaggerReferenceNotes.posts}`,
     example: exampleIds.postId,
   })
   @ApiOkResponse({
@@ -214,7 +217,7 @@ export class PostsController {
   })
   @ApiParam({
     name: 'id',
-    description: 'ID del post.',
+    description: `ID del post. ${swaggerReferenceNotes.posts}`,
     example: exampleIds.postId,
   })
   @ApiOkResponse({
@@ -246,7 +249,7 @@ export class PostsController {
   })
   @ApiParam({
     name: 'id',
-    description: 'ID del post.',
+    description: `ID del post. ${swaggerReferenceNotes.posts}`,
     example: exampleIds.postId,
   })
   @ApiOkResponse({
@@ -270,7 +273,7 @@ export class PostsController {
   })
   @ApiParam({
     name: 'id',
-    description: 'ID del post.',
+    description: `ID del post. ${swaggerReferenceNotes.posts}`,
     example: exampleIds.postId,
   })
   @ApiBody({
@@ -301,7 +304,7 @@ export class PostsController {
   })
   @ApiParam({
     name: 'id',
-    description: 'ID del post.',
+    description: `ID del post. ${swaggerReferenceNotes.posts}`,
     example: exampleIds.postId,
   })
   @ApiOkResponse({

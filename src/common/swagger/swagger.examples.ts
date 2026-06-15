@@ -1,19 +1,47 @@
 import type { OpenAPIObject } from '@nestjs/swagger';
 
+const configuredDemoEmail = process.env.SWAGGER_DEMO_EMAIL?.trim() || '';
+const configuredDemoPassword =
+  process.env.SWAGGER_DEMO_PASSWORD?.trim() || '';
+
 export const swaggerDemoAccount = {
-  email: process.env.SWAGGER_DEMO_EMAIL || 'lucia.suarez@ucb.edu.bo',
-  password: process.env.SWAGGER_DEMO_PASSWORD || 'Password123!',
+  email: configuredDemoEmail,
+  password: configuredDemoPassword,
+};
+
+export const swaggerHasDemoAccount = Boolean(
+  configuredDemoEmail && configuredDemoPassword,
+);
+
+export const swaggerReferenceNotes = {
+  careers:
+    'Primero ejecuta GET /api/careers y copia un careerId real. Ejemplo actual en Supabase: Ingenieria de Sistemas -> 2e75860d-3bc6-4392-8ce8-03a961ccfa09.',
+  users:
+    'Primero ejecuta GET /api/users o GET /api/search?q=... y copia un userId real. Ejemplo actual en Supabase: Frederick Aguirre -> 45af29fa-53c6-4344-8cc6-9d91364896a9.',
+  posts:
+    'Primero ejecuta GET /api/posts o GET /api/careers/:id/posts y copia un postId real. Ejemplo actual en Supabase: af211c8b-9024-40e1-9859-337f207cb428.',
+  comments:
+    'Usa el id devuelto por POST /api/comments o uno obtenido desde GET /api/comments/post/:postId. No uses un commentId fijo de ejemplo.',
+  notifications:
+    'Primero ejecuta GET /api/notifications autenticado como el mismo usuario y copia un notificationId real de esa respuesta.',
+  messageRecipient:
+    'Primero ejecuta GET /api/users o GET /api/search?q=... y usa un userId real como recipientId. Si la BD remota aun no tiene mensajes, POST /api/messages crea el primero.',
 };
 
 export const exampleIds = {
-  careerId: '9bb0f37e-1e30-4df9-bd11-8cf5fe8ef2ab',
-  userId: '7a9ad4a2-c0ba-445f-a57f-7925e4f0d52f',
-  peerUserId: '2f5bb4a8-932d-4cc6-8e79-fd55de0a67b9',
-  profileId: '7ecdf43d-7540-46d2-b5c3-63a2a70cd2f3',
-  postId: '4e8bc4c1-a05f-45a6-a5a6-937aab10f1f9',
-  commentId: '7740fd73-bf73-409b-9cf0-b7e8ec7de55a',
-  notificationId: '99b3f83f-2989-4134-8526-1cc4c7d1ab0f',
-  messageId: '12d58a5f-d9d0-4387-b883-120810b922af',
+  careerId: '2e75860d-3bc6-4392-8ce8-03a961ccfa09',
+  peerCareerId: '63381e0f-d1a0-49a7-a239-df5aaba052c1',
+  followingCareerId: 'f383aca2-c730-4f45-80d3-b1ed374cb95b',
+  userId: 'a3a1e753-6105-4eb3-82ab-5e7e1067a9ff',
+  peerUserId: '45af29fa-53c6-4344-8cc6-9d91364896a9',
+  followingUserId: 'b0aa3144-3603-43e3-9414-4286aee5b684',
+  profileId: 'a3303d0f-7cf6-4d54-bbb7-c67170b31192',
+  peerProfileId: '09a7cbd7-f0f5-4f2c-bfa6-066e8484bfd6',
+  followingProfileId: 'e96f932d-dda7-4b53-be76-9d401c88c2ae',
+  postId: 'af211c8b-9024-40e1-9859-337f207cb428',
+  commentId: '<comment-id-devuelto-por-post-o-get>',
+  notificationId: 'af910e00-5b04-4258-ae22-2e3e973c57fe',
+  messageId: '<message-id-generado-en-runtime>',
 };
 
 export const careerExample = {
@@ -30,12 +58,24 @@ export const careerSummaryExample = {
   code: 'IS',
 };
 
+export const peerCareerSummaryExample = {
+  id: exampleIds.peerCareerId,
+  name: 'Arquitectura',
+  code: 'AR',
+};
+
+export const followingCareerSummaryExample = {
+  id: exampleIds.followingCareerId,
+  name: 'Contaduria Publica',
+  code: 'CP',
+};
+
 export const profileSummaryExample = {
   id: exampleIds.profileId,
   userId: exampleIds.userId,
-  fullName: 'Lucia Suarez',
-  bio: 'Construyo interfaces, tomo cafe y siempre tengo una idea para una hackathon.',
-  avatarUrl: 'https://i.pravatar.cc/300?img=32',
+  fullName: 'Prueba Swagger',
+  bio: null,
+  avatarUrl: null,
   campus: 'La Paz',
   careerId: exampleIds.careerId,
   career: careerSummaryExample,
@@ -43,18 +83,55 @@ export const profileSummaryExample = {
 
 export const userSummaryExample = {
   id: exampleIds.userId,
-  email: swaggerDemoAccount.email,
+  email: 'prueba.swagger1@ucb.edu.bo',
   role: 'student',
   profile: profileSummaryExample,
 };
 
+export const peerProfileSummaryExample = {
+  id: exampleIds.peerProfileId,
+  userId: exampleIds.peerUserId,
+  fullName: 'Frederick Aguirre',
+  bio: '',
+  avatarUrl:
+    'https://pixabay.com/es/photos/perro-retrato-animal-perfil-hocico-707808/',
+  campus: 'La Paz',
+  careerId: exampleIds.peerCareerId,
+  career: peerCareerSummaryExample,
+};
+
+export const peerUserSummaryExample = {
+  id: exampleIds.peerUserId,
+  email: 'frederick.aguirre@ucb.edu.bo',
+  role: 'student',
+  profile: peerProfileSummaryExample,
+};
+
+export const followingProfileSummaryExample = {
+  id: exampleIds.followingProfileId,
+  userId: exampleIds.followingUserId,
+  fullName: 'Ronald Rodriguez',
+  bio: null,
+  avatarUrl: null,
+  campus: 'La Paz',
+  careerId: exampleIds.followingCareerId,
+  career: followingCareerSummaryExample,
+};
+
+export const followingUserSummaryExample = {
+  id: exampleIds.followingUserId,
+  email: 'ronald@ucb.edu.bo',
+  role: 'student',
+  profile: followingProfileSummaryExample,
+};
+
 export const authUserExample = {
   id: exampleIds.userId,
-  email: swaggerDemoAccount.email,
+  email: 'prueba.swagger1@ucb.edu.bo',
   isActive: true,
   role: 'student',
-  createdAt: '2026-06-09T12:00:00.000Z',
-  updatedAt: '2026-06-09T12:00:00.000Z',
+  createdAt: '2026-06-15T22:45:55.757Z',
+  updatedAt: '2026-06-15T22:45:55.757Z',
 };
 
 export const authMeExample = {
@@ -65,25 +142,23 @@ export const authMeExample = {
 export const postCommentExample = {
   id: exampleIds.commentId,
   postId: exampleIds.postId,
-  authorId: exampleIds.userId,
-  content: 'Me interesa cubrir el proyecto cuando salga la version final.',
-  createdAt: '2026-06-09T12:30:00.000Z',
-  author: userSummaryExample,
+  authorId: exampleIds.peerUserId,
+  content: 'Yep, this is me',
+  createdAt: '2026-06-09T09:54:35.068Z',
+  author: peerUserSummaryExample,
 };
 
 export const postExample = {
   id: exampleIds.postId,
-  authorId: exampleIds.userId,
-  careerId: exampleIds.careerId,
-  content:
-    'Acabamos de cerrar una demo del prototipo para la feria de innovacion. Si alguien quiere sumarse al backend o al testing, escriban.',
-  mediaUrl:
-    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80',
-  createdAt: '2026-06-09T12:20:00.000Z',
-  updatedAt: '2026-06-09T12:20:00.000Z',
-  author: userSummaryExample,
-  career: careerSummaryExample,
-  likesCount: 2,
+  authorId: exampleIds.peerUserId,
+  careerId: exampleIds.peerCareerId,
+  content: '67 days with epstein',
+  mediaUrl: null,
+  createdAt: '2026-06-09T09:54:13.937Z',
+  updatedAt: '2026-06-09T09:54:13.937Z',
+  author: peerUserSummaryExample,
+  career: peerCareerSummaryExample,
+  likesCount: 1,
   commentsCount: 1,
   likedByCurrentUser: false,
   savedByCurrentUser: false,
@@ -101,166 +176,154 @@ export const paginatedPostsExample = {
 };
 
 export const followStatsExample = {
-  followers: 3,
-  following: 2,
+  followers: 0,
+  following: 1,
 };
 
 export const followNetworkExample = {
-  followers: [
-    {
-      ...userSummaryExample,
-      id: exampleIds.peerUserId,
-      email: 'sofia.medina@ucb.edu.bo',
-      profile: {
-        ...profileSummaryExample,
-        id: '7c6ad97b-4ba8-4e0b-ae77-7849b0f0d9c2',
-        userId: exampleIds.peerUserId,
-        fullName: 'Sofia Medina',
-        career: {
-          id: '20c7f695-a2e6-4608-8936-9f8488c13770',
-          name: 'Comunicacion Social',
-          code: 'CS',
-        },
-      },
-    },
-  ],
-  following: [userSummaryExample],
+  followers: [],
+  following: [followingUserSummaryExample],
   counts: followStatsExample,
 };
 
 export const followSuggestionExample = {
   ...userSummaryExample,
-  id: exampleIds.peerUserId,
-  email: 'sofia.medina@ucb.edu.bo',
-  profile: {
-    ...profileSummaryExample,
-    id: '7c6ad97b-4ba8-4e0b-ae77-7849b0f0d9c2',
-    userId: exampleIds.peerUserId,
-    fullName: 'Sofia Medina',
-    career: {
-      id: '20c7f695-a2e6-4608-8936-9f8488c13770',
-      name: 'Comunicacion Social',
-      code: 'CS',
-    },
-  },
   isFollowing: false,
 };
 
 export const notificationExample = {
   id: exampleIds.notificationId,
-  type: 'message',
-  message: 'Sofia Medina te envio un mensaje',
-  link: `/home?view=messages&userId=${exampleIds.peerUserId}`,
+  type: 'follow',
+  message: 'Frederick Aguirre empezo a seguirte',
+  link: `/profile/${exampleIds.peerUserId}`,
   isRead: false,
-  createdAt: '2026-06-09T13:00:00.000Z',
-  actor: followSuggestionExample,
-};
-
-export const conversationSummaryExample = {
-  user: followSuggestionExample,
-  lastMessage: {
-    id: exampleIds.messageId,
-    content: 'Cuando tengas fecha para la demo, avisame y lo cubrimos.',
-    createdAt: '2026-06-09T13:10:00.000Z',
-    senderId: exampleIds.peerUserId,
-    recipientId: exampleIds.userId,
-    isRead: false,
-  },
-  unreadCount: 1,
+  createdAt: '2026-06-09T10:57:12.409Z',
+  actor: peerUserSummaryExample,
 };
 
 export const messageExample = {
   id: exampleIds.messageId,
-  content: 'Cuando tengas fecha para la demo, avisame y lo cubrimos.',
-  isRead: true,
-  createdAt: '2026-06-09T13:10:00.000Z',
-  senderId: exampleIds.peerUserId,
-  recipientId: exampleIds.userId,
-  sender: followSuggestionExample,
-  recipient: userSummaryExample,
+  content: 'Mensaje enviado desde Swagger contra la BD remota.',
+  isRead: false,
+  createdAt: '<fecha-generada-en-runtime>',
+  senderId: exampleIds.userId,
+  recipientId: exampleIds.peerUserId,
+  sender: userSummaryExample,
+  recipient: peerUserSummaryExample,
+};
+
+export const conversationSummaryExample = {
+  user: peerUserSummaryExample,
+  lastMessage: {
+    id: exampleIds.messageId,
+    content: messageExample.content,
+    createdAt: messageExample.createdAt,
+    senderId: messageExample.senderId,
+    recipientId: messageExample.recipientId,
+    isRead: false,
+  },
+  unreadCount: 0,
 };
 
 export const conversationDetailExample = {
-  user: followSuggestionExample,
-  messages: [
-    messageExample,
-    {
-      ...messageExample,
-      id: 'a2b3db54-4061-4898-a149-c6d16df2920b',
-      content: 'Perfecto, manana te mando el horario y el enlace del prototipo.',
-      senderId: exampleIds.userId,
-      recipientId: exampleIds.peerUserId,
-      sender: userSummaryExample,
-      recipient: followSuggestionExample,
-    },
-  ],
+  user: peerUserSummaryExample,
+  messages: [],
 };
 
 export const dashboardOverviewExample = {
   profile: {
-    fullName: 'Lucia Suarez',
-    email: swaggerDemoAccount.email,
+    fullName: 'Frederick Aguirre',
+    email: 'frederick.aguirre@ucb.edu.bo',
     campus: 'La Paz',
-    career: careerSummaryExample,
+    career: peerCareerSummaryExample,
   },
   metrics: {
-    myPosts: 1,
-    careerPosts: 5,
-    savedPosts: 2,
-    unreadNotifications: 1,
-    unreadMessages: 1,
-    followers: 3,
-    following: 2,
-    pendingItems: 2,
+    myPosts: 2,
+    careerPosts: 2,
+    savedPosts: 1,
+    unreadNotifications: 0,
+    unreadMessages: 0,
+    followers: 0,
+    following: 1,
+    pendingItems: 0,
   },
   highlight: {
-    profileCompletion: 100,
-    engagementScore: 6,
+    profileCompletion: 67,
+    engagementScore: 3,
     focusMessage:
-      'Tienes conversaciones pendientes. Responder rapido mejora la interaccion.',
+      'Tu perfil puede verse mas solido si completas los elementos pendientes.',
   },
 };
 
 export const searchResultsExample = {
-  query: 'lucia',
-  users: [followSuggestionExample],
-  careers: [careerSummaryExample],
+  query: 'frederick',
+  users: [peerUserSummaryExample],
+  careers: [],
   posts: [postExample],
 };
 
 export function buildSwaggerDescription() {
-  return [
+  const lines = [
     '# GeTa API',
     '',
-    'Documentacion interactiva del backend de GeTa.',
+    'Documentacion interactiva del backend de GeTa contra la BD remota actual de Supabase.',
+    'No depende de `npm run seed` para probar los endpoints principales.',
     '',
-    '## Cuenta de prueba para Swagger',
-    '',
-    `- Email: \`${swaggerDemoAccount.email}\``,
-    `- Password: \`${swaggerDemoAccount.password}\``,
-    '- Si aun no existe la cuenta, ejecuta `npm run seed` en el backend.',
-    '',
+  ];
+
+  if (swaggerHasDemoAccount) {
+    lines.push(
+      '## Cuenta demo opcional configurada',
+      '',
+      `- Email: \`${swaggerDemoAccount.email}\``,
+      `- Password: \`${swaggerDemoAccount.password}\``,
+      '- Tambien puedes reemplazarla por cualquier otra cuenta valida de la BD remota.',
+      '',
+    );
+  } else {
+    lines.push(
+      '## Cuenta para pruebas',
+      '',
+      '- Usa cualquier cuenta valida que ya exista en la BD remota.',
+      '- Si aun no tienes una, registrala desde `POST /api/auth/register` usando un `careerId` real de `GET /api/careers`.',
+      '',
+    );
+  }
+
+  lines.push(
     '## Flujo recomendado de prueba',
     '',
-    '1. Usa el panel "Acceso rapido" al inicio de Swagger o prueba `POST /auth/login`.',
-    '2. Swagger cargara el token automaticamente para los endpoints protegidos.',
-    '3. Para endpoints con `careerId`, `userId` o `postId`, primero consulta `/careers`, `/users`, `/posts` o `/profiles/me` y reutiliza esos IDs reales.',
+    '1. Ejecuta `GET /api/careers` y copia un `careerId` real.',
+    '2. Si no tienes una cuenta valida, registra una nueva con `POST /api/auth/register`.',
+    '3. Si ya tienes cuenta, usa `POST /api/auth/login`.',
+    '4. Copia el `accessToken` o usa el panel "Acceso rapido" para cargar el Bearer token automaticamente.',
+    '5. Antes de enviar `userId`, `postId`, `commentId` o `notificationId`, consulta primero `GET /api/users`, `GET /api/search`, `GET /api/posts`, `GET /api/comments/post/:postId` o `GET /api/notifications` y reutiliza esos IDs reales.',
     '',
     '## Rutas ligadas al frontend',
     '',
-    '- `LoginPage` usa `/auth/login`.',
-    '- `RegisterPage` y `CareerSelectionPage` usan `/auth/register` y `/careers`.',
+    '- `LoginPage` usa `/api/auth/login`.',
+    '- `RegisterPage` y `CareerSelectionPage` usan `/api/auth/register` y `/api/careers`.',
     '- `HomePage`, `Feed`, `SearchPanel`, `MessagesPanel`, `NotificationsPanel` y `ProfilePage` consumen el resto de endpoints documentados aqui.',
-  ].join('\n');
+  );
+
+  return lines.join('\n');
 }
 
 export function buildSwaggerCustomJs() {
   const email = JSON.stringify(swaggerDemoAccount.email);
   const password = JSON.stringify(swaggerDemoAccount.password);
+  const hasDemoAccount = JSON.stringify(swaggerHasDemoAccount);
+  const defaultStatus = JSON.stringify(
+    swaggerHasDemoAccount
+      ? 'Se detecto una cuenta demo configurada. Puedes usarla o reemplazarla por cualquier cuenta valida de la BD remota.'
+      : 'Ingresa cualquier cuenta valida de la BD remota. Si aun no tienes una, registrala primero con POST /api/auth/register usando un careerId real de GET /api/careers.',
+  );
 
   return `
   window.addEventListener('load', function () {
     const defaults = { email: ${email}, password: ${password} };
+    const hasDemoAccount = ${hasDemoAccount};
+    const defaultStatus = ${defaultStatus};
 
     function authorizeToken(token) {
       if (window.ui && typeof window.ui.preauthorizeApiKey === 'function') {
@@ -313,14 +376,15 @@ export function buildSwaggerCustomJs() {
             <p style="margin:0 0 6px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#9a7a00;">Acceso rapido</p>
             <h3 style="margin:0 0 8px;font-size:20px;color:#10243a;">Probar endpoints protegidos sin copiar el token a mano</h3>
             <p style="margin:0;color:#38506b;font-size:14px;line-height:1.5;">Ingresa una cuenta valida, inicia sesion y Swagger autorizara automaticamente los endpoints con Bearer token.</p>
+            \${hasDemoAccount ? '<p style="margin:8px 0 0;color:#166534;font-size:12px;font-weight:700;">Hay una cuenta demo configurada en variables de entorno.</p>' : ''}
           </div>
           <form id="geta-swagger-login-form" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;min-width:min(100%,520px);flex:1;">
             <input name="email" type="email" placeholder="tu.correo@ucb.edu.bo" value="\${defaults.email}" style="height:42px;padding:0 12px;border:1px solid #c9d6e7;border-radius:10px;" />
-            <input name="password" type="password" placeholder="Contrasena" value="\${defaults.password}" style="height:42px;padding:0 12px;border:1px solid #c9d6e7;border-radius:10px;" />
+            <input name="password" type="password" placeholder="Tu password real" value="\${defaults.password}" style="height:42px;padding:0 12px;border:1px solid #c9d6e7;border-radius:10px;" />
             <button type="submit" style="height:42px;border:none;border-radius:10px;background:#ffd100;color:#10243a;font-weight:800;cursor:pointer;">Iniciar sesion</button>
           </form>
         </div>
-        <p id="geta-swagger-login-status" style="margin:12px 0 0;color:#38506b;font-size:13px;">Puedes usar la cuenta seed por defecto o reemplazarla por otra cuenta real.</p>
+        <p id="geta-swagger-login-status" style="margin:12px 0 0;color:#38506b;font-size:13px;">\${defaultStatus}</p>
       \`;
 
       infoContainer.prepend(panel);

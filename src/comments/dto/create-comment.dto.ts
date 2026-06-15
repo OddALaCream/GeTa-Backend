@@ -1,10 +1,11 @@
+import { swaggerReferenceNotes } from '../../common/swagger/swagger.examples';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 export class CreateCommentDto {
   @ApiProperty({
-    example: '4e8bc4c1-a05f-45a6-a5a6-937aab10f1f9',
-    description: 'ID del post que recibira el comentario.',
+    example: 'af211c8b-9024-40e1-9859-337f207cb428',
+    description: `ID del post que recibira el comentario. ${swaggerReferenceNotes.posts}`,
   })
   @IsUUID()
   postId: string;

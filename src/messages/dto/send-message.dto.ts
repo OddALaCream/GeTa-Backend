@@ -1,10 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { swaggerReferenceNotes } from '../../common/swagger/swagger.examples';
 
 export class SendMessageDto {
   @ApiProperty({
-    example: '2f5bb4a8-932d-4cc6-8e79-fd55de0a67b9',
-    description: 'ID del usuario destinatario.',
+    example: '45af29fa-53c6-4344-8cc6-9d91364896a9',
+    description: `ID del usuario destinatario. ${swaggerReferenceNotes.messageRecipient}`,
   })
   @IsUUID()
   recipientId: string;

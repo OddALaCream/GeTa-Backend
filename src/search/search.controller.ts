@@ -23,7 +23,7 @@ export class SearchController {
   @ApiOperation({
     summary: 'Busqueda global',
     description:
-      'Flujo real del frontend: SearchPanel -> searchService.searchAll. Devuelve usuarios, carreras y posts.',
+      'Flujo real del frontend: SearchPanel -> searchService.searchAll. Devuelve usuarios, carreras y posts y tambien sirve para obtener userId y postId reales antes de probar otros endpoints en Swagger.',
   })
   @ApiQuery({
     name: 'q',

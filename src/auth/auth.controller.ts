@@ -17,7 +17,9 @@ import {
   authMeExample,
   authUserExample,
   exampleIds,
+  swaggerReferenceNotes,
   swaggerDemoAccount,
+  swaggerHasDemoAccount,
 } from '../common/swagger/swagger.examples';
 
 @Controller('auth')
@@ -34,8 +36,8 @@ export class AuthController {
   @ApiBody({
     type: RegisterDto,
     examples: {
-      seededFlow: {
-        summary: 'Registro de estudiante',
+      remoteFlow: {
+        summary: 'Registro contra la BD remota actual',
         value: {
           email: 'nuevo.estudiante@ucb.edu.bo',
           password: 'Password123!',
@@ -44,6 +46,7 @@ export class AuthController {
         },
       },
     },
+    description: swaggerReferenceNotes.careers,
   })
   @ApiCreatedResponse({
     description: 'Cuenta creada correctamente.',
@@ -62,14 +65,21 @@ export class AuthController {
   @ApiOperation({
     summary: 'Iniciar sesion',
     description:
-      'Flujo real del frontend: LoginPage -> authService.loginRequest. Este endpoint devuelve el JWT para autorizar el resto de la API.',
+      'Flujo real del frontend: LoginPage -> authService.loginRequest. Usa una cuenta valida existente en Supabase o registra una nueva con POST /api/auth/register. Este endpoint devuelve el JWT para autorizar el resto de la API.',
   })
   @ApiBody({
     type: LoginDto,
     examples: {
-      seedAccount: {
-        summary: 'Cuenta seed recomendada para pruebas',
-        value: swaggerDemoAccount,
+      remoteAccount: {
+        summary: swaggerHasDemoAccount
+          ? 'Cuenta demo configurada por entorno'
+          : 'Cuenta existente en la BD remota',
+        value: swaggerHasDemoAccount
+          ? swaggerDemoAccount
+          : {
+              email: 'tu.cuenta@ucb.edu.bo',
+              password: 'tu-password-real',
+            },
       },
     },
   })

@@ -23,6 +23,7 @@ import {
   followNetworkExample,
   followStatsExample,
   followSuggestionExample,
+  swaggerReferenceNotes,
 } from '../common/swagger/swagger.examples';
 
 @Controller('follows')
@@ -54,7 +55,7 @@ export class FollowsController {
   })
   @ApiParam({
     name: 'userId',
-    description: 'ID del usuario a consultar.',
+    description: `ID del usuario a consultar. ${swaggerReferenceNotes.users}`,
     example: exampleIds.userId,
   })
   @ApiOkResponse({
@@ -91,7 +92,7 @@ export class FollowsController {
   })
   @ApiParam({
     name: 'userId',
-    description: 'ID del usuario a seguir.',
+    description: `ID del usuario a seguir. ${swaggerReferenceNotes.users}`,
     example: exampleIds.peerUserId,
   })
   @ApiOkResponse({
@@ -116,7 +117,7 @@ export class FollowsController {
   })
   @ApiParam({
     name: 'userId',
-    description: 'ID del usuario a dejar de seguir.',
+    description: `ID del usuario a dejar de seguir. ${swaggerReferenceNotes.users}`,
     example: exampleIds.peerUserId,
   })
   @ApiOkResponse({

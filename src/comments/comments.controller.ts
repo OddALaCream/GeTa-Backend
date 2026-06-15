@@ -27,6 +27,7 @@ import { RequestUser } from '../auth/interfaces/request-user.interface';
 import {
   exampleIds,
   postCommentExample,
+  swaggerReferenceNotes,
 } from '../common/swagger/swagger.examples';
 
 @Controller('comments')
@@ -46,7 +47,8 @@ export class CommentsController {
     type: CreateCommentDto,
   })
   @ApiCreatedResponse({
-    description: 'Comentario creado correctamente.',
+    description:
+      'Comentario creado correctamente. Reutiliza el `id` devuelto aqui si luego quieres probar PATCH /api/comments/{id} o DELETE /api/comments/{id}.',
     schema: {
       example: postCommentExample,
     },
@@ -66,11 +68,12 @@ export class CommentsController {
   })
   @ApiParam({
     name: 'postId',
-    description: 'ID del post.',
+    description: `ID del post. ${swaggerReferenceNotes.posts}`,
     example: exampleIds.postId,
   })
   @ApiOkResponse({
-    description: 'Comentarios visibles del post.',
+    description:
+      'Comentarios visibles del post. Puedes reutilizar cualquiera de estos `id` reales para probar PATCH /api/comments/{id} o DELETE /api/comments/{id}.',
     schema: {
       example: [postCommentExample],
     },
@@ -85,8 +88,7 @@ export class CommentsController {
   })
   @ApiParam({
     name: 'id',
-    description: 'ID del comentario.',
-    example: exampleIds.commentId,
+    description: `ID del comentario. ${swaggerReferenceNotes.comments}`,
   })
   @ApiBody({
     type: UpdateCommentDto,
@@ -114,8 +116,7 @@ export class CommentsController {
   })
   @ApiParam({
     name: 'id',
-    description: 'ID del comentario.',
-    example: exampleIds.commentId,
+    description: `ID del comentario. ${swaggerReferenceNotes.comments}`,
   })
   @ApiOkResponse({
     description: 'Comentario marcado como eliminado.',
