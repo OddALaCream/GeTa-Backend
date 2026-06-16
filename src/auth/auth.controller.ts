@@ -10,6 +10,7 @@ import {
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { RequestUser } from './interfaces/request-user.interface';
@@ -94,6 +95,36 @@ export class AuthController {
   })
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
+  }
+
+  @Post('reset-password')
+  @ApiOperation({
+    summary: 'Restablecer contraseña',
+    description:
+      'Endpoint para restablecer la contraseña de un usuario a partir de su correo institucional.',
+  })
+  @ApiBody({
+    type: ResetPasswordDto,
+    examples: {
+      resetRequest: {
+        summary: 'Restablecer contraseña usando correo institucional.',
+        value: {
+          email: 'tu.nombre@ucb.edu.bo',
+          newPassword: 'NuevaPassword123!',
+        },
+      },
+    },
+  })
+  @ApiOkResponse({
+    description: 'Contraseña restablecida correctamente.',
+    schema: {
+      example: {
+        message: 'Password updated successfully',
+      },
+    },
+  })
+  resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    return this.authService.resetPassword(resetPasswordDto);
   }
 
   @Get('me')

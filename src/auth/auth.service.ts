@@ -11,6 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { User } from '../users/entities/user.entity';
 import { Profile } from '../profiles/entities/profile.entity';
 import { Career } from '../careers/entities/career.entity';
@@ -94,6 +95,25 @@ export class AuthService {
     });
 
     return { ...user, profile };
+  }
+
+  async resetPassword(resetPasswordDto: ResetPasswordDto) {
+    const { email, newPassword } = resetPasswordDto;
+
+    if (!email.endsWith('@ucb.edu.bo')) {
+      throw new BadRequestException('Only @ucb.edu.bo institutional emails are allowed');
+    }
+
+    const user = await this.usersRepo.findOne({ where: { email } });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+    user.passwordHash = passwordHash;
+    await this.usersRepo.save(user);
+
+    return { message: 'Password updated successfully' };
   }
 
   private generateToken(user: User): string {
