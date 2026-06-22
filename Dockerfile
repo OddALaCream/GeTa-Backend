@@ -1,11 +1,36 @@
-FROM node:22-bookworm-slim
+FROM node:20-bookworm-slim AS deps
 
 WORKDIR /app
 
-COPY package*.json ./
-
+COPY package.json package-lock.json ./
 RUN npm ci
+
+
+FROM deps AS build
+
+COPY nest-cli.json tsconfig.json tsconfig.build.json ./
+COPY src ./src
+COPY public ./public
+RUN npm run build
+
+
+FROM node:20-bookworm-slim AS production
+
+ENV NODE_ENV=production
+ENV PORT=3000
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev && npm cache clean --force
+
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/public ./public
+
+RUN mkdir -p uploads && chown -R node:node /app
+
+USER node
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start:dev"]
+CMD ["node", "dist/main"]
