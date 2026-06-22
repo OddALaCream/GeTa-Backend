@@ -1,0 +1,10 @@
+node_modules
+dist
+coverage
+.git
+.env
+.env.*
+backend-runtime.log
+backend-runtime-new.log
+uploads
+npm-debug.log*
